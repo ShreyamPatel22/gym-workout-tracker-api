@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id              String       @id @default(uuid())
+  first_name      String
+  last_name       String
+  email           String       @unique
+  password_hash   String
+  date_of_birth   DateTime?
+  fitness_goal    String?
+  role            Role         @default(USER)
+  created_at      DateTime     @default(now())
+  workouts        Workout[]
+}
+
+model Workout {
+  id          String       @id @default(uuid())
+  user_id     String
+  name        String
+  description String?
+  created_at  DateTime     @default(now())
+  user        User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  logs        WorkoutLog[]
+}
+
+model Exercise {
+  id           String       @id @default(uuid())
+  name         String       @unique
+  muscle_group String
+  created_at   DateTime     @default(now())
+  logs         WorkoutLog[]
+}
+
+model WorkoutLog {
+  id           String    @id @default(uuid())
+  workout_id   String
+  exercise_id  String
+  sets         Int
+  reps         Int
+  weight       Float
+  notes        String?
+  performed_at DateTime  @default(now())
+  workout      Workout   @relation(fields: [workout_id], references: [id], onDelete: Cascade)
+  exercise     Exercise  @relation(fields: [exercise_id], references: [id], onDelete: Cascade)
+}
