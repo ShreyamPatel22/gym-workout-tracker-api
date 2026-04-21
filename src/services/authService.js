@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { findUserByEmail, createUser } from "../repositories/auth.repository.js";
+import { findUserByEmail, createUser } from "../repositories/authRepository.js";
 
 export const signup = async ({ first_name, last_name, email, password, date_of_birth, fitness_goal, role }) => {
   const existing = await findUserByEmail(email);
