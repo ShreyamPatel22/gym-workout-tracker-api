@@ -3,6 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/authRoutes.js";
 import workoutRoutes from "./routes/workoutRoutes.js";
+import exerciseRoutes from "./routes/exerciseRoutes.js";
+import workoutLogRoutes from "./routes/workoutLogRoutes.js";
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/exercises", exerciseRoutes);
+app.use("/api/workoutlogs", workoutLogRoutes);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message || "Internal Server Error" });
