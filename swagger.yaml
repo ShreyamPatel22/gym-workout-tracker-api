@@ -1,0 +1,724 @@
+openapi: 3.0.3
+
+info:
+  title: Gym Workout Tracker API
+  version: 1.0.0
+  description: API for logging and tracking gym workouts, exercises, and performance logs
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Auth
+    description: User authentication endpoints
+  - name: Workouts
+    description: Operations related to workouts
+  - name: Exercises
+    description: Operations related to exercises
+  - name: WorkoutLogs
+    description: Operations related to workout performance logs
+
+paths:
+  /api/auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login and get JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                example:
+                  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/workouts:
+    post:
+      tags:
+        - Workouts
+      summary: Create a new workout
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutRequest'
+      responses:
+        '201':
+          description: Workout created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    get:
+      tags:
+        - Workouts
+      summary: Get all workouts for authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of workouts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workout'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/workouts/{id}:
+    get:
+      tags:
+        - Workouts
+      summary: Get a workout by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Workout found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+        '400':
+          $ref: '#/components/responses/InvalidId'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Workouts
+      summary: Update a workout
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutRequest'
+      responses:
+        '200':
+          description: Workout updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Workouts
+      summary: Delete a workout
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Workout deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/exercises:
+    post:
+      tags:
+        - Exercises
+      summary: Create a new exercise (admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExerciseRequest'
+      responses:
+        '201':
+          description: Exercise created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    get:
+      tags:
+        - Exercises
+      summary: Get all exercises
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/exercises/{id}:
+    get:
+      tags:
+        - Exercises
+      summary: Get an exercise by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Exercise found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          $ref: '#/components/responses/InvalidId'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Exercises
+      summary: Update an exercise (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExerciseRequest'
+      responses:
+        '200':
+          description: Exercise updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Exercises
+      summary: Delete an exercise (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Exercise deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/workoutlogs:
+    post:
+      tags:
+        - WorkoutLogs
+      summary: Create a new workout log entry
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutLogRequest'
+      responses:
+        '201':
+          description: Workout log created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkoutLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    get:
+      tags:
+        - WorkoutLogs
+      summary: Get all workout logs for authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of workout logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkoutLog'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/workoutlogs/{id}:
+    get:
+      tags:
+        - WorkoutLogs
+      summary: Get a workout log by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Workout log found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkoutLog'
+        '400':
+          $ref: '#/components/responses/InvalidId'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - WorkoutLogs
+      summary: Update a workout log
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutLogUpdateRequest'
+      responses:
+        '200':
+          description: Workout log updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkoutLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - WorkoutLogs
+      summary: Delete a workout log
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Workout log deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    ResourceId:
+      name: id
+      in: path
+      required: true
+      description: Resource UUID
+      schema:
+        type: string
+        example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+
+  schemas:
+    SignupRequest:
+      type: object
+      required: [first_name, last_name, email, password]
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        date_of_birth:
+          type: string
+        fitness_goal:
+          type: string
+        role:
+          type: string
+          enum: [USER, ADMIN]
+      example:
+        first_name: 'John'
+        last_name: 'Doe'
+        email: 'john@example.com'
+        password: 'password123'
+        fitness_goal: 'Build muscle'
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: 'john@example.com'
+        password: 'password123'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          readOnly: true
+      example:
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        first_name: 'John'
+        last_name: 'Doe'
+        email: 'john@example.com'
+        role: 'USER'
+        created_at: '2026-03-26T00:00:00.000Z'
+
+    WorkoutRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: 'Leg Day'
+        description: 'Lower body workout'
+
+    Workout:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        user_id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          readOnly: true
+      example:
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        user_id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
+        name: 'Leg Day'
+        description: 'Lower body workout'
+        created_at: '2026-03-26T00:00:00.000Z'
+
+    ExerciseRequest:
+      type: object
+      required: [name, muscle_group]
+      properties:
+        name:
+          type: string
+        muscle_group:
+          type: string
+      example:
+        name: 'Bench Press'
+        muscle_group: 'Chest'
+
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        muscle_group:
+          type: string
+        created_at:
+          type: string
+          readOnly: true
+      example:
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        name: 'Bench Press'
+        muscle_group: 'Chest'
+        created_at: '2026-03-26T00:00:00.000Z'
+
+    WorkoutLogRequest:
+      type: object
+      required: [workout_id, exercise_id, sets, reps, weight]
+      properties:
+        workout_id:
+          type: string
+        exercise_id:
+          type: string
+        sets:
+          type: integer
+        reps:
+          type: integer
+        weight:
+          type: number
+        notes:
+          type: string
+        performed_at:
+          type: string
+      example:
+        workout_id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        exercise_id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
+        sets: 3
+        reps: 10
+        weight: 135.0
+        notes: 'Felt strong today'
+
+    WorkoutLogUpdateRequest:
+      type: object
+      properties:
+        sets:
+          type: integer
+        reps:
+          type: integer
+        weight:
+          type: number
+        notes:
+          type: string
+        performed_at:
+          type: string
+      example:
+        sets: 4
+        reps: 12
+        weight: 145.0
+        notes: 'Increased weight today'
+
+    WorkoutLog:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        workout_id:
+          type: string
+        exercise_id:
+          type: string
+        sets:
+          type: integer
+        reps:
+          type: integer
+        weight:
+          type: number
+        notes:
+          type: string
+        performed_at:
+          type: string
+          readOnly: true
+      example:
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+        workout_id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901'
+        exercise_id: 'c3d4e5f6-a7b8-9012-cdef-123456789012'
+        sets: 3
+        reps: 10
+        weight: 135.0
+        notes: 'Felt strong today'
+        performed_at: '2026-03-30T00:00:00.000Z'
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: 'Resource not found'
+
+    InvalidId:
+      description: Invalid UUID provided
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+          example:
+            errors: ['Invalid UUID']
+
+    BadRequest:
+      description: Missing or invalid fields
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: string
+          example:
+            errors: ['name is required']
+
+    Unauthorized:
+      description: Not authenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: 'Unauthorized'
+
+    Forbidden:
+      description: Not allowed to perform this action
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: 'Forbidden'
+
+    Conflict:
+      description: Email already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: 'Email already exists'
