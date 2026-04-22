@@ -6,7 +6,10 @@ info:
   description: API for logging and tracking gym workouts, exercises, and performance logs
 
 servers:
+  - url: https://gym-workout-tracker-api.onrender.com
+    description: Production
   - url: http://localhost:3000
+    description: Local
 
 tags:
   - name: Auth
