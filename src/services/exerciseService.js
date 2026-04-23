@@ -1,7 +1,17 @@
 import * as repo from "../repositories/exerciseRepository.js";
 
-export const createExercise = ({ name, muscle_group }) =>
-  repo.createExercise({ name, muscle_group });
+export const createExercise = async ({ name, muscle_group }) => {
+  try {
+    return await repo.createExercise({ name, muscle_group });
+  } catch (err) {
+    if (err.code === "P2002") {
+      const conflict = new Error("Exercise name already exists");
+      conflict.status = 409;
+      throw conflict;
+    }
+    throw err;
+  }
+};
 
 export const getAllExercises = () => repo.getAllExercises();
 
