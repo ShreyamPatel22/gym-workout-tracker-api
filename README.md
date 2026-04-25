@@ -54,10 +54,10 @@ All protected endpoints require a JWT:
 - Expect 201 with user object
 
 **400 Bad Request:**
-- Remove `email` field → Expect 400
+- Remove `email` field -> Expect 400
 
 **409 Conflict:**
-- Use `"email": "admin@example.com"` → Expect 409
+- Use `"email": "admin@example.com"` -> Expect 409
 
 ---
 
@@ -71,17 +71,17 @@ All protected endpoints require a JWT:
 - Expect 200 with token
 
 **400 Bad Request:**
-- Remove `password` field → Expect 400
+- Remove `password` field -> Expect 400
 
 **401 Unauthorized:**
-- Use `"password": "wrongpassword"` → Expect 401
+- Use `"password": "wrongpassword"` -> Expect 401
 
 ---
 
 ## POST /api/workouts
 **Access Control:** Authenticated users only
 
-**Setup:** Login as `john@example.com` / `user123`, copy token → Authorize
+**Setup:** Login as `john@example.com` / `user123`, copy token -> Authorize
 
 **Success (201):**
 ```json
@@ -90,10 +90,10 @@ All protected endpoints require a JWT:
 - Expect 201 with workout object
 
 **400 Bad Request:**
-- Remove `name` field → Expect 400
+- Remove `name` field -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -101,10 +101,10 @@ All protected endpoints require a JWT:
 **Access Control:** Authenticated users only
 
 **Success (200):**
-- Execute → Expect 200 with array of user's workouts
+- Execute -> Expect 200 with array of user's workouts
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -112,19 +112,19 @@ All protected endpoints require a JWT:
 **Access Control:** Owner only
 
 **Success (200):**
-- Use a workout ID from GET /api/workouts → Expect 200
+- Use a workout ID from GET /api/workouts -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use john's workout ID → Expect 403
+- Login as `admin@example.com`, use john's workout ID -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -140,16 +140,16 @@ All protected endpoints require a JWT:
 - Expect 200 with updated workout
 
 **400 Bad Request:**
-- Remove `name` field → Expect 400
+- Remove `name` field -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use john's workout ID → Expect 403
+- Login as `admin@example.com`, use john's workout ID -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -157,16 +157,16 @@ All protected endpoints require a JWT:
 **Access Control:** Owner only
 
 **Success (204):**
-- Use a workout ID owned by logged in user → Expect 204
+- Use a workout ID owned by logged in user -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use john's workout ID → Expect 403
+- Login as `admin@example.com`, use john's workout ID -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -182,16 +182,16 @@ All protected endpoints require a JWT:
 - Expect 201 with exercise object
 
 **400 Bad Request:**
-- Remove `muscle_group` → Expect 400
+- Remove `muscle_group` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `john@example.com` → Expect 403
+- Login as `john@example.com` -> Expect 403
 
 **409 Conflict:**
-- Use `"name": "Bench Press"` → Expect 409
+- Use `"name": "Bench Press"` -> Expect 409
 
 ---
 
@@ -199,10 +199,10 @@ All protected endpoints require a JWT:
 **Access Control:** Authenticated users only
 
 **Success (200):**
-- Execute → Expect 200 with array of 4 exercises
+- Execute -> Expect 200 with array of 4 exercises
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -210,16 +210,16 @@ All protected endpoints require a JWT:
 **Access Control:** Authenticated users only
 
 **Success (200):**
-- Use an exercise ID from GET /api/exercises → Expect 200
+- Use an exercise ID from GET /api/exercises -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -236,13 +236,13 @@ All protected endpoints require a JWT:
 - Expect 200 with updated exercise
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `john@example.com` → Expect 403
+- Login as `john@example.com` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -252,16 +252,16 @@ All protected endpoints require a JWT:
 **Setup:** Login as `admin@example.com`
 
 **Success (204):**
-- Use an exercise ID → Expect 204
+- Use an exercise ID -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `john@example.com` → Expect 403
+- Login as `john@example.com` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -284,16 +284,16 @@ All protected endpoints require a JWT:
 - Expect 201 with workout log object
 
 **400 Bad Request:**
-- Remove `sets` field → Expect 400
+- Remove `sets` field -> Expect 400
 
 **401 Unauthorized:**
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Use a workout ID belonging to `admin@example.com` → Expect 403
+- Use a workout ID belonging to `admin@example.com` -> Expect 403
 
 **404 Not Found:**
-- Use `"workout_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"` → Expect 404
+- Use `"workout_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"` -> Expect 404
 
 ---
 
@@ -304,7 +304,7 @@ All protected endpoints require a JWT:
 - Execute → Expect 200 with array of user's workout logs
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -312,19 +312,19 @@ All protected endpoints require a JWT:
 **Access Control:** Owner only
 
 **Success (200):**
-- Use a log ID from GET /api/workoutlogs → Expect 200
+- Use a log ID from GET /api/workoutlogs -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use a log ID belonging to `john@example.com` → Expect 403
+- Login as `admin@example.com`, use a log ID belonging to `john@example.com` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -340,13 +340,13 @@ All protected endpoints require a JWT:
 - Expect 200 with updated log
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use john's log ID → Expect 403
+- Login as `admin@example.com`, use john's log ID -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -356,13 +356,13 @@ All protected endpoints require a JWT:
 **Setup:** Login as `john@example.com`
 
 **Success (204):**
-- Use a log ID owned by john → Expect 204
+- Use a log ID owned by john -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
-- Login as `admin@example.com`, use john's log ID → Expect 403
+- Login as `admin@example.com`, use john's log ID -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
