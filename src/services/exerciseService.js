@@ -27,7 +27,16 @@ export const getExercise = async (id) => {
 
 export const updateExercise = async (id, data) => {
   await getExercise(id);
-  return repo.updateExercise(id, data);
+  try {
+    return await repo.updateExercise(id, data);
+  } catch (err) {
+    if (err.code === "P2002") {
+      const conflict = new Error("Exercise name already exists");
+      conflict.status = 409;
+      throw conflict;
+    }
+    throw err;
+  }
 };
 
 export const deleteExercise = async (id) => {
