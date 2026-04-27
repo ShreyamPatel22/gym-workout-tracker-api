@@ -15,23 +15,6 @@ A REST API for logging and tracking gym workouts, exercises, and performance log
 | Admin | admin@example.com   | admin123  |
 | User  | john@example.com    | user123   |
 
-## Seeded Test IDs
-
-These IDs are created by `prisma/seed.js` on every deployment, so the grader can test owner/admin endpoints without guessing.
-
-| Resource | Owner | Name | ID |
-|----------|-------|------|----|
-| Workout | john@example.com | Chest Day | `77777777-7777-4777-8777-777777777777` |
-| Workout | john@example.com | Leg Day | `88888888-8888-4888-8888-888888888888` |
-| Workout | admin@example.com | Full Body | `99999999-9999-4999-8999-999999999999` |
-| Exercise | Shared | Bench Press | `33333333-3333-4333-8333-333333333333` |
-| Exercise | Shared | Squat | `44444444-4444-4444-8444-444444444444` |
-| Exercise | Shared | Deadlift | `55555555-5555-4555-8555-555555555555` |
-| Exercise | Shared | Pull Up | `66666666-6666-4666-8666-666666666666` |
-| Workout Log | john@example.com | Chest Day / Bench Press | `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` |
-| Workout Log | john@example.com | Leg Day / Squat | `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` |
-| Workout Log | admin@example.com | Full Body / Deadlift | `cccccccc-cccc-4ccc-8ccc-cccccccccccc` |
-
 ## Tech Stack
 
 - Node.js + Express
@@ -98,7 +81,11 @@ All protected endpoints require a JWT:
 ## POST /api/workouts
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
+
+Copy token → click Authorize
 
 **Success (201):**
 ```json
@@ -117,7 +104,9 @@ All protected endpoints require a JWT:
 ## GET /api/workouts
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
 - Execute → Expect 200 with array of user's workouts
@@ -130,10 +119,12 @@ All protected endpoints require a JWT:
 ## GET /api/workouts/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
-- Use John's seeded workout ID `77777777-7777-4777-8777-777777777777` → Expect 200
+- Use a workout ID from GET /api/workouts → Expect 200
 
 **400 Bad Request:**
 - Use id: `invalid-uuid` → Expect 400
@@ -142,8 +133,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use a workout ID belonging to `john@example.com` → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -153,13 +146,16 @@ All protected endpoints require a JWT:
 ## PUT /api/workouts/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
+
+Get workout ID from GET /api/workouts
 
 **Success (200):**
 ```json
 { "name": "Updated Chest Day", "description": "Updated" }
 ```
-- Use John's workout ID `77777777-7777-4777-8777-777777777777`
 - Expect 200 with updated workout
 
 **400 Bad Request:**
@@ -169,8 +165,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use john's workout ID → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -180,17 +178,21 @@ All protected endpoints require a JWT:
 ## DELETE /api/workouts/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (204):**
-- Use John's workout ID `88888888-8888-4888-8888-888888888888` → Expect 204
+- Use a workout ID owned by logged in user → Expect 204
 
 **401 Unauthorized:**
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use john's workout ID → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -200,7 +202,9 @@ All protected endpoints require a JWT:
 ## POST /api/exercises
 **Access Control:** Admin only
 
-**Setup:** Login with `admin@example.com` / `admin123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `admin@example.com`
+- Password: `admin123`
 
 **Success (201):**
 ```json
@@ -215,8 +219,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `john@example.com` / `user123`
-- Use the same request body and expect 403
+- Login with:
+  - Email: `john@example.com`
+  - Password: `user123`
+- Expect 403
 
 **409 Conflict:**
 - Use `"name": "Bench Press"` → Expect 409
@@ -226,7 +232,9 @@ All protected endpoints require a JWT:
 ## GET /api/exercises
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
 - Execute → Expect 200 with array of 4 exercises
@@ -239,10 +247,12 @@ All protected endpoints require a JWT:
 ## GET /api/exercises/{id}
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
-- Use exercise ID `33333333-3333-4333-8333-333333333333` → Expect 200
+- Use an exercise ID from GET /api/exercises → Expect 200
 
 **400 Bad Request:**
 - Use id: `invalid-uuid` → Expect 400
@@ -258,10 +268,12 @@ All protected endpoints require a JWT:
 ## PUT /api/exercises/{id}
 **Access Control:** Admin only
 
-**Setup:** Login with `admin@example.com` / `admin123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `admin@example.com`
+- Password: `admin123`
 
 **Success (200):**
-- Use exercise ID `33333333-3333-4333-8333-333333333333`
+- Use an exercise ID from GET /api/exercises
 ```json
 { "name": "Barbell Bench Press", "muscle_group": "Chest" }
 ```
@@ -271,8 +283,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `john@example.com` / `user123`
-- Use the same request and expect 403
+- Login with:
+  - Email: `john@example.com`
+  - Password: `user123`
+- Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -282,17 +296,21 @@ All protected endpoints require a JWT:
 ## DELETE /api/exercises/{id}
 **Access Control:** Admin only
 
-**Setup:** Login with `admin@example.com` / `admin123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `admin@example.com`
+- Password: `admin123`
 
 **Success (204):**
-- Use exercise ID `66666666-6666-4666-8666-666666666666` → Expect 204
+- Use an exercise ID → Expect 204
 
 **401 Unauthorized:**
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `john@example.com` / `user123`
-- Use the same request and expect 403
+- Login with:
+  - Email: `john@example.com`
+  - Password: `user123`
+- Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -302,13 +320,17 @@ All protected endpoints require a JWT:
 ## POST /api/workoutlogs
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
+
+Get a workout ID from GET /api/workouts and an exercise ID from GET /api/exercises
 
 **Success (201):**
 ```json
 {
-  "workout_id": "77777777-7777-4777-8777-777777777777",
-  "exercise_id": "44444444-4444-4444-8444-444444444444",
+  "workout_id": "<john's workout id>",
+  "exercise_id": "<exercise id>",
   "sets": 3,
   "reps": 10,
   "weight": 135,
@@ -324,8 +346,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` with any valid exercise ID, such as `33333333-3333-4333-8333-333333333333` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use a workout ID belonging to `john@example.com` → Expect 403
 
 **404 Not Found:**
 - Use `"workout_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"` → Expect 404
@@ -335,7 +359,9 @@ All protected endpoints require a JWT:
 ## GET /api/workoutlogs
 **Access Control:** Authenticated users only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
 - Execute → Expect 200 with array of user's workout logs
@@ -348,10 +374,12 @@ All protected endpoints require a JWT:
 ## GET /api/workoutlogs/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (200):**
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 200
+- Use a log ID from GET /api/workoutlogs → Expect 200
 
 **400 Bad Request:**
 - Use id: `invalid-uuid` → Expect 400
@@ -360,8 +388,10 @@ All protected endpoints require a JWT:
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use a log ID belonging to `john@example.com` → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -371,25 +401,26 @@ All protected endpoints require a JWT:
 ## PUT /api/workoutlogs/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
+
+Get a log ID from GET /api/workoutlogs
 
 **Success (200):**
 ```json
 { "sets": 4, "reps": 12, "weight": 145, "notes": "Increased weight" }
 ```
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa`
 - Expect 200 with updated log
 
 **401 Unauthorized:**
 - Remove JWT → Expect 401
 
-**400 Bad Request:**
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa`
-- Send `{ "sets": 0, "reps": 12, "weight": 145 }` → Expect 400
-
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use john's log ID → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
@@ -399,17 +430,21 @@ All protected endpoints require a JWT:
 ## DELETE /api/workoutlogs/{id}
 **Access Control:** Owner only
 
-**Setup:** Login with `john@example.com` / `user123`, copy the token, and click **Authorize**.
+**Setup:** Login with:
+- Email: `john@example.com`
+- Password: `user123`
 
 **Success (204):**
-- Use John's second log ID `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` → Expect 204
+- Use a log ID owned by john → Expect 204
 
 **401 Unauthorized:**
 - Remove JWT → Expect 401
 
 **403 Forbidden:**
-- Login with `admin@example.com` / `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Login with:
+  - Email: `admin@example.com`
+  - Password: `admin123`
+- Use john's log ID → Expect 403
 
 **404 Not Found:**
 - Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
