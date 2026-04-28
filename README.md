@@ -17,8 +17,6 @@ A REST API for logging and tracking gym workouts, exercises, and performance log
 
 ## Seeded Test IDs
 
-These IDs are created by `prisma/seed.js` on every deployment so the grader does not need to guess owner/admin test data.
-
 | Resource | Owner | Name | ID |
 |----------|-------|------|----|
 | Workout | john@example.com | Chest Day | `77777777-7777-4777-8777-777777777777` |
