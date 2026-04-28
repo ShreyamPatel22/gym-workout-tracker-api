@@ -47,9 +47,17 @@ A REST API for logging and tracking gym workouts, exercises, and performance log
 
 ## Setup
 All protected endpoints require a JWT:
-1. Use `POST /api/auth/login` to get a token
-2. Click **Authorize** at the top of Swagger UI
-3. Paste the token and click **Authorize**
+1. Open https://gym-workout-tracker-api.onrender.com/api-docs
+2. Open POST /api/auth/login
+3. Click Try it out
+4. Enter one of the seeded credentials:
+5. Admin: admin@example.com / admin123
+6. User: john@example.com / user123
+7. Click Execute
+8. Copy the returned JWT token
+9. Click the Authorize button at the top of Swagger UI
+10. Paste the token into the field and click Authorize
+11. Click Close
 
 ---
 
