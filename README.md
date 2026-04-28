@@ -71,10 +71,10 @@ All protected endpoints require a JWT:
 - Expect 201 with user object
 
 **400 Bad Request:**
-- Remove `email` field → Expect 400
+- Remove `email` field -> Expect 400
 
 **409 Conflict:**
-- Use `"email": "admin@example.com"` → Expect 409
+- Use `"email": "admin@example.com"` -> Expect 409
 
 ---
 
@@ -88,10 +88,10 @@ All protected endpoints require a JWT:
 - Expect 200 with token
 
 **400 Bad Request:**
-- Remove `password` field → Expect 400
+- Remove `password` field -> Expect 400
 
 **401 Unauthorized:**
-- Use `"password": "wrongpassword"` → Expect 401
+- Use `"password": "wrongpassword"` -> Expect 401
 
 ---
 
@@ -102,7 +102,7 @@ All protected endpoints require a JWT:
 - Email: `john@example.com`
 - Password: `user123`
 
-Copy token → click Authorize
+Copy token -> click Authorize
 
 **Success (201):**
 ```json
@@ -111,10 +111,10 @@ Copy token → click Authorize
 - Expect 201 with workout object
 
 **400 Bad Request:**
-- Remove `name` field → Expect 400
+- Remove `name` field -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -126,10 +126,10 @@ Copy token → click Authorize
 - Password: `user123`
 
 **Success (200):**
-- Execute → Expect 200 with array of user's workouts
+- Execute -> Expect 200 with array of user's workouts
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -141,22 +141,22 @@ Copy token → click Authorize
 - Password: `user123`
 
 **Success (200):**
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 200
+- Use John's workout ID `77777777-7777-4777-8777-777777777777` -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Use John's workout ID `77777777-7777-4777-8777-777777777777` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -177,19 +177,19 @@ Get workout ID from GET /api/workouts
 - Expect 200 with updated workout
 
 **400 Bad Request:**
-- Remove `name` field → Expect 400
+- Remove `name` field -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Use John's workout ID `77777777-7777-4777-8777-777777777777` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -201,19 +201,19 @@ Get workout ID from GET /api/workouts
 - Password: `user123`
 
 **Success (204):**
-- Use John's workout ID `88888888-8888-4888-8888-888888888888` → Expect 204
+- Use John's workout ID `88888888-8888-4888-8888-888888888888` -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` → Expect 403
+- Use John's workout ID `77777777-7777-4777-8777-777777777777` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -231,10 +231,10 @@ Get workout ID from GET /api/workouts
 - Expect 201 with exercise object
 
 **400 Bad Request:**
-- Remove `muscle_group` → Expect 400
+- Remove `muscle_group` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
@@ -243,7 +243,7 @@ Get workout ID from GET /api/workouts
 - Expect 403
 
 **409 Conflict:**
-- Use `"name": "Bench Press"` → Expect 409
+- Use `"name": "Bench Press"` -> Expect 409
 
 ---
 
@@ -255,10 +255,10 @@ Get workout ID from GET /api/workouts
 - Password: `user123`
 
 **Success (200):**
-- Execute → Expect 200 with array of 4 exercises
+- Execute -> Expect 200 with array of 4 exercises
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -270,16 +270,16 @@ Get workout ID from GET /api/workouts
 - Password: `user123`
 
 **Success (200):**
-- Use exercise ID `33333333-3333-4333-8333-333333333333` → Expect 200
+- Use exercise ID `33333333-3333-4333-8333-333333333333` -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -298,7 +298,7 @@ Get workout ID from GET /api/workouts
 - Expect 200 with updated exercise
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
@@ -308,10 +308,10 @@ Get workout ID from GET /api/workouts
 
 **409 Conflict:**
 - Use exercise ID `44444444-4444-4444-8444-444444444444`
-- Send `{ "name": "Bench Press", "muscle_group": "Legs" }` → Expect 409
+- Send `{ "name": "Bench Press", "muscle_group": "Legs" }` -> Expect 409
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -323,10 +323,10 @@ Get workout ID from GET /api/workouts
 - Password: `admin123`
 
 **Success (204):**
-- Use exercise ID `66666666-6666-4666-8666-666666666666` → Expect 204
+- Use exercise ID `66666666-6666-4666-8666-666666666666` -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
@@ -335,7 +335,7 @@ Get workout ID from GET /api/workouts
 - Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -362,19 +362,19 @@ Get a workout ID from GET /api/workouts and an exercise ID from GET /api/exercis
 - Expect 201 with workout log object
 
 **400 Bad Request:**
-- Remove `sets` field → Expect 400
+- Remove `sets` field -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's workout ID `77777777-7777-4777-8777-777777777777` with exercise ID `33333333-3333-4333-8333-333333333333` → Expect 403
+- Use John's workout ID `77777777-7777-4777-8777-777777777777` with exercise ID `33333333-3333-4333-8333-333333333333` -> Expect 403
 
 **404 Not Found:**
-- Use `"workout_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"` → Expect 404
+- Use `"workout_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"` -> Expect 404
 
 ---
 
@@ -386,10 +386,10 @@ Get a workout ID from GET /api/workouts and an exercise ID from GET /api/exercis
 - Password: `user123`
 
 **Success (200):**
-- Execute → Expect 200 with array of user's workout logs
+- Execute -> Expect 200 with array of user's workout logs
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 ---
 
@@ -401,22 +401,22 @@ Get a workout ID from GET /api/workouts and an exercise ID from GET /api/exercis
 - Password: `user123`
 
 **Success (200):**
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 200
+- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` -> Expect 200
 
 **400 Bad Request:**
-- Use id: `invalid-uuid` → Expect 400
+- Use id: `invalid-uuid` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -438,19 +438,19 @@ Get a log ID from GET /api/workoutlogs
 
 **400 Bad Request:**
 - Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa`
-- Send `{ "sets": 0, "reps": 12, "weight": 145 }` → Expect 400
+- Send `{ "sets": 0, "reps": 12, "weight": 145 }` -> Expect 400
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
 
 ---
 
@@ -462,16 +462,16 @@ Get a log ID from GET /api/workoutlogs
 - Password: `user123`
 
 **Success (204):**
-- Use John's second log ID `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` → Expect 204
+- Use John's second log ID `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` -> Expect 204
 
 **401 Unauthorized:**
-- Remove JWT → Expect 401
+- Remove JWT -> Expect 401
 
 **403 Forbidden:**
 - Login with:
   - Email: `admin@example.com`
   - Password: `admin123`
-- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` → Expect 403
+- Use John's log ID `aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa` -> Expect 403
 
 **404 Not Found:**
-- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` → Expect 404
+- Use id: `a1b2c3d4-e5f6-7890-abcd-ef1234567890` -> Expect 404
