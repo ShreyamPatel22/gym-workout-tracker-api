@@ -51,13 +51,13 @@ All protected endpoints require a JWT:
 2. Open POST /api/auth/login
 3. Click Try it out
 4. Enter one of the seeded credentials:
-5. Admin: admin@example.com / admin123
-6. User: john@example.com / user123
-7. Click Execute
-8. Copy the returned JWT token
-9. Click the Authorize button at the top of Swagger UI
-10. Paste the token into the field and click Authorize
-11. Click Close
+   - Admin: admin@example.com / admin123
+   - User: john@example.com / user123
+5. Click Execute
+6. Copy the returned JWT token
+7. Click the Authorize button at the top of Swagger UI
+8. Paste the token into the field and click Authorize
+9. Click Close
 
 ---
 
